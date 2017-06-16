@@ -1,11 +1,11 @@
 
 window.addEventListener("deviceorientation", on_device_orientation);
+//document.addEventListener("touchstart", on_touch);
 
+	// parametri senzor miscare
 var alpha = 0;
 var beta = 0;
 var gamma = 0;
-
-var color = "#FFF000";
 
 var vechi = [];
 var pasi = 100; // minim 3
@@ -19,7 +19,19 @@ for (var i = 0 ; i < pasi ; i++)
 	vechi.push({importanta:p, v_alpha:0, v_beta:0, v_gamma:0});
 }
 
+var color = "red";
 
+	/* parametri recognition
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+
+var recognition = new webkitSpeechRecognition();
+recognition.lang = 'en-US';
+recognition.maxAlternatives = 5;
+
+var recognition_started = false;
+*/
+
+	// functii
 
 function on_device_orientation(evt)
 {
@@ -27,6 +39,7 @@ function on_device_orientation(evt)
 		return 0;
 	run_function = true;
 	
+		// citire valori de la senzor
 	var t_alpha = Math.round(evt.alpha);
 	var t_beta = Math.round(evt.beta);
 	var t_gamma = Math.round(evt.gamma);
@@ -84,10 +97,11 @@ function on_device_orientation(evt)
 		// raza si calcul centru cerc
 	var raza = 40;
 	var centru = {x:canvas.width/2, y:canvas.height/2};
+	ctx.lineWidth = 10;
 	
 	ctx.beginPath();
 	
-		// desenare cerc
+			// desenare cerc
 	ctx.arc(centru.x + gamma * (canvas.width/2 - raza)/90, centru.y + beta * (canvas.height/2 - raza)/90, raza, 0, 2 * Math.PI);
 	
 		// calcul culoare
@@ -99,6 +113,7 @@ function on_device_orientation(evt)
 	ctx.fill();
 	ctx.stroke();
 	
+		// vibreaza daca bila se apropie de margine
 	if ((Math.abs(beta) > 70) || (Math.abs(gamma) > 70))
 	{
 		navigator.vibrate(1000);
@@ -107,3 +122,36 @@ function on_device_orientation(evt)
 	run_function = false;
 	
 }
+/*
+	// recognition
+	
+function on_touch(e)
+{
+	if (!recognition_started)
+	{
+	recognition.start();
+	recognition_started = true;
+	}
+}
+
+function on_end()
+{
+	recognition.stop();
+	recognition_started = false;
+}
+
+recognition.onend = on_end;
+recognition.onsoundend = on_end;
+recognition.onspeechend = on_end;
+
+
+	recognition.onresult = on_results;
+	
+function on_results(e)
+{
+	var alternatives = e.results[0];
+	for (var i = 0; i < alternatives.length; i++)
+	{
+		document.getElementById("text").innerHTML += alternatives[i].transcript + " - "+ alternatives[i].confidence + "<br>";
+	}
+}	*/
