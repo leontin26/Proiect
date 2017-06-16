@@ -99,6 +99,11 @@ function on_device_orientation(evt)
 	ctx.fill();
 	ctx.stroke();
 	
+	if ((Math.abs(beta) > 70) || (Math.abs(gamma) > 70))
+	{
+		navigator.vibrate(1000);
+	}
+	
 	run_function = false;
 	
 }
