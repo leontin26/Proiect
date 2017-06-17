@@ -1,6 +1,6 @@
 
 window.addEventListener("deviceorientation", on_device_orientation);
-//document.addEventListener("touchstart", on_touch);
+
 
 	// parametri senzor miscare
 var alpha = 0;
@@ -19,17 +19,14 @@ for (var i = 0 ; i < pasi ; i++)
 	vechi.push({importanta:p, v_alpha:0, v_beta:0, v_gamma:0});
 }
 
+	// creare canvas si context
+var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+canvas.width  = window.innerWidth-20;
+canvas.height = window.innerHeight-200;
+
 var color = "red";
 
-	/* parametri recognition
-var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
-
-var recognition = new webkitSpeechRecognition();
-recognition.lang = 'en-US';
-recognition.maxAlternatives = 5;
-
-var recognition_started = false;
-*/
 
 	// functii
 
@@ -83,21 +80,19 @@ function on_device_orientation(evt)
 	
 	
 				// afisare valori
-	document.getElementById("a").innerHTML = "alpha = " + alpha.toString();
-	document.getElementById("b").innerHTML = "beta = " + beta.toString();
-	document.getElementById("g").innerHTML = "gamma = " + gamma.toString();
-	
-		// creare canvas si context
-	var canvas = document.getElementById("canvas");
-	var ctx = canvas.getContext("2d");
+	document.getElementById("valori").innerHTML = 
+	"&nbsp &nbsp &nbsp alpha = " + alpha.toString() + 
+	", &nbsp &nbsp &nbsp beta = " + beta.toString() + 
+	", &nbsp &nbsp &nbsp gamma = " + gamma.toString();
+				
 	
 		// stergere zona ecran (canvas)
-	ctx.clearRect(0, 0, canvas.height, canvas.width);
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	
 		// raza si calcul centru cerc
-	var raza = 40;
+	var raza = 60;
 	var centru = {x:canvas.width/2, y:canvas.height/2};
-	ctx.lineWidth = 10;
+	ctx.lineWidth = 15;
 	
 	ctx.beginPath();
 	
@@ -122,36 +117,3 @@ function on_device_orientation(evt)
 	run_function = false;
 	
 }
-/*
-	// recognition
-	
-function on_touch(e)
-{
-	if (!recognition_started)
-	{
-	recognition.start();
-	recognition_started = true;
-	}
-}
-
-function on_end()
-{
-	recognition.stop();
-	recognition_started = false;
-}
-
-recognition.onend = on_end;
-recognition.onsoundend = on_end;
-recognition.onspeechend = on_end;
-
-
-	recognition.onresult = on_results;
-	
-function on_results(e)
-{
-	var alternatives = e.results[0];
-	for (var i = 0; i < alternatives.length; i++)
-	{
-		document.getElementById("text").innerHTML += alternatives[i].transcript + " - "+ alternatives[i].confidence + "<br>";
-	}
-}	*/

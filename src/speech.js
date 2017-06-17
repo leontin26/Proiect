@@ -5,7 +5,7 @@ document.addEventListener("touchstart", on_touch);
 
 var recognition = new webkitSpeechRecognition();
 recognition.lang = 'en-US';
-//recognition.maxAlternatives = 5;
+
 
 var recognition_started = false;
 
@@ -33,13 +33,6 @@ recognition.onresult = on_results;
 function on_results(e)
 {
 	color = e.results[0][0].transcript;
-	document.getElementById("text").innerHTML = "culoare = " + color;
+	document.getElementById("text").innerHTML = "&nbsp &nbsp &nbsp culoare contur = " + color;
 	
-	/*
-	var comanda = e.results;
-	document.getElementById("text").innerHTML = "comanda = " + comanda.transcript;
-	for (var i = 0; i < SpeechRecognitionResultList.length; i++)
-{		document.getElementById("text").innerHTML += alternatives[i].transcript + " - "+ alternatives[i].confidence + "<br>";
-	}
-	*/
 }
